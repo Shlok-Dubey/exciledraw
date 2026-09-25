@@ -1,4 +1,5 @@
-
+import 'express-serve-static-core'
+import { JwtPayload } from 'jsonwebtoken';
 export interface CreateUserInput {
     email: string;
     username: string;
@@ -6,7 +7,7 @@ export interface CreateUserInput {
     firstName: string;
   }
   
-  export type ResponseOfCreate = {
+export type ResponseOfCreate = {
         success: true;
         id: number;
       }
@@ -14,3 +15,13 @@ export interface CreateUserInput {
         success: false;
         error: string;
       };
+
+      declare global {
+        namespace Express {
+          interface Request {
+            userId?: string | JwtPayload;
+          }
+        }
+      }
+      
+      export {};  

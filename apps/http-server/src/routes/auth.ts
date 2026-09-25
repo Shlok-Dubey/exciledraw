@@ -1,8 +1,10 @@
 import express from 'express'
 import type { Request, Response, Router } from 'express'
-import {string, z} from 'zod'
+import {z} from 'zod'
+import argon2, { argon2d, argon2i, argon2id } from 'argon2'
 import { ResponseOfCreate } from '../index.d.js'
 import { addUser } from '../client.js'
+
 
 const UserCreate = z.object({
     username : z.string().max(12).min(1),
@@ -20,7 +22,8 @@ auth.post('/signup', async (req : Request, res : Response)=>{
         res.status(400).json({message:data.error,success:false});
       } else {
         const {email,username,password,firstName} = data.data
-        const response : ResponseOfCreate = await addUser({email,username,password,firstName})
+        const hashedPass = await argon2.hash(password)
+        const response : ResponseOfCreate = await addUser({email,username,password : hashedPass,firstName})
         if (!response.success) {
             res.status(400).json({
                 success : false,
@@ -35,5 +38,6 @@ auth.post('/signup', async (req : Request, res : Response)=>{
 })
 
 auth.post('/login',(req : Request ,res : Response)=>{
-
+    const data = req.body
+    
 })
