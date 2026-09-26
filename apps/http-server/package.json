@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@repo/typescript-config": "*",
-    "@repo/database":"*",
+    "@repo/database": "*",
     "argon2": "^0.45.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -16,11 +16,15 @@
   "devDependencies": {
     "@types/argon2": "^0.15.4",
     "@types/bun": "latest",
+    "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10"
   },
   "peerDependencies": {
     "typescript": "^7"
+  },
+  "scripts": {
+    "dev" : "bun run src/index.ts"
   }
 }

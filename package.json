@@ -2,13 +2,14 @@
   "name": "exciledraw",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
+    "build": "dotenv run -f .env -- turbo run build",
+    "dev": "dotenv run -f .env -- turbo run dev --env-mode=loose",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "dotenv-cli": "^11.0.0",
     "prettier": "3.9.6",
     "turbo": "^2.11.2",
     "typescript": "7.0.2"

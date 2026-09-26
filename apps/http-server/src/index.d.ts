@@ -24,4 +24,11 @@ export type ResponseOfCreate = {
         }
       }
       
-      export {};  
+export interface LoginSchema {
+  username : string,
+  hashPassword : string
+}
+
+export type GetPasswordResult =
+| { success: true; password: string; id: number }
+| { success: false; error: string };
