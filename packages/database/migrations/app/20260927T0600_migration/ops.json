@@ -1,0 +1,122 @@
+[
+  {
+    "id": "table.room",
+    "label": "Create table \"room\"",
+    "summary": "Creates table \"room\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "room"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"room\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"room\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"room\"",
+        "sql": "CREATE TABLE \"public\".\"room\" (\n  \"id\" SERIAL NOT NULL,\n  \"userId\" int4 NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"room\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"room\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.room.room_userId_idx_a489d58a",
+    "label": "Create index \"room_userId_idx_a489d58a\" on \"room\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "room_userId_idx_a489d58a",
+        "table": "room"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"room_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"room_userId_idx_a489d58a\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"room_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"room_userId_idx_a489d58a\" ON \"public\".\"room\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"room_userId_idx_a489d58a\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"room_userId_idx_a489d58a\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.room.room_userId_fkey",
+    "label": "Add foreign key \"room_userId_fkey\" on \"room\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "room_userId_fkey",
+        "table": "room"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"room_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "room_userId_fkey",
+          "public",
+          "\"public\".\"room\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"room_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"room\"\nADD CONSTRAINT \"room_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"user\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"room_userId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "room_userId_fkey",
+          "public",
+          "\"public\".\"room\""
+        ]
+      }
+    ]
+  }
+]

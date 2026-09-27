@@ -1,0 +1,20 @@
+{
+  "name": "socket-server",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@repo/typescript-config": "*"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/ws": "^8.18.1",
+    "ws": "^8.22.0"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts"
+  }
+}

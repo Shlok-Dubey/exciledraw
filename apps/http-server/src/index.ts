@@ -5,6 +5,7 @@ import { reg } from './routes/reg.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { db } from '@repo/database/client'
+import { room } from './routes/room.js'
 
 
 const app = express()
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 app.use('/api/v1/auth', auth )
+app.use('/api/v1/room', room)
 app.use('/*splat',reg)
 
 app.listen(PORT, async () => {

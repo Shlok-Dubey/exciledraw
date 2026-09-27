@@ -8,4 +8,12 @@ model User {
   password  String
   createdAt TimestamptzString @default(now())
   updatedAt temporal.updatedAtString()
+
+   rooms     Room[] 
+}
+
+model Room {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
 }

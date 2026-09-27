@@ -42,3 +42,21 @@ export async function getPassword(username : string ):Promise<GetPasswordResult>
         }
     }
 }
+
+export async  function genRoom(userId : string){
+    try{
+        const Id : number = Number(userId)
+        const roomId = await db.orm.public.Room.select('id').create({
+        userId : Id
+    })
+
+    return {
+        success : true,
+        roomId
+    }}catch(error){
+        return {
+            success : false,
+           error : error instanceof Error ? error.message : "Failed to create room"
+        }
+    }
+}

@@ -1,5 +1,4 @@
-import express from 'express'
-import type { Request, Response, Router } from 'express'
+import { Request, Response, Router } from 'express'
 import {z} from 'zod'
 import argon2 from 'argon2'
 import { LoginSchema, ResponseOfCreate } from '../index.d.js'
@@ -15,7 +14,7 @@ const UserCreate = z.object({
 })
 
 
-export const auth : Router = express.Router()
+export const auth : Router = Router()
 
 auth.post('/signup', async (req: Request, res: Response) => {
     try {
